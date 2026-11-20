@@ -1,79 +1,361 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Habitly</title>
+    <title>Habitly - Build Better Habits</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy: #0B1F3A;
+            --teal: #14B8A6;
+            --background: #F8FAFC;
+            --white: #FFFFFF;
+            --text: #24364B;
+            --muted: #64748B;
+            --header-muted: #CBD5E1;
+            --border: #E2E8F0;
+            --teal-light: #E6FFFB;
+            --teal-dark: #0F9488;
+            --teal-hover: #0FAE9D;
+            --focus-ring: rgba(20, 184, 166, 0.35);
+            --teal-wash: rgba(20, 184, 166, 0.14);
+            --shadow: 0 8px 24px rgba(11, 31, 58, 0.08);
+            --shadow-hover: 0 12px 28px rgba(11, 31, 58, 0.12);
+            --radius-card: 12px;
+            --radius-button: 8px;
+            --space-1: 8px;
+            --space-2: 16px;
+            --space-3: 24px;
+            --space-4: 32px;
+            --space-5: 40px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--background);
+            color: var(--text);
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.5;
+        }
+
+        .site-header {
+            background: var(--navy);
+            color: var(--white);
+            padding: var(--space-3) var(--space-2);
+        }
+
+        .header-inner,
+        main,
+        .footer-inner {
+            width: min(1120px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-3);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: var(--radius-card);
+            background: var(--teal-wash);
+            font-size: 26px;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--white);
+            font-size: 30px;
+            line-height: 1.2;
+        }
+
+        .header-date {
+            margin: var(--space-1) 0 0;
+            color: var(--header-muted);
+            font-size: 14px;
+        }
+
+        main {
+            padding-top: var(--space-4);
+            padding-bottom: var(--space-5);
+        }
+
+        .section {
+            margin-bottom: var(--space-4);
+        }
+
+        .section-title {
+            margin: 0 0 var(--space-2);
+            color: var(--navy);
+            font-size: 22px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: var(--space-2);
+        }
+
+        .stat-card,
+        .habit-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow);
+            transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+        }
+
+        .stat-card {
+            padding: var(--space-3);
+        }
+
+        .stat-label {
+            margin: 0 0 var(--space-1);
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            margin: 0;
+            color: var(--navy);
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .habits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--space-2);
+        }
+
+        .habit-card {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+            padding: var(--space-3);
+        }
+
+        .habit-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .habit-icon {
+            width: 48px;
+            height: 48px;
+            flex: 0 0 48px;
+            display: grid;
+            place-items: center;
+            border-radius: var(--radius-card);
+            background: var(--teal-light);
+            font-size: 24px;
+        }
+
+        .habit-name {
+            margin: 0;
+            color: var(--navy);
+            font-size: 17px;
+        }
+
+        .habit-streak {
+            margin: 0;
+            color: var(--teal-dark);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .complete-button {
+            width: 100%;
+            margin-top: auto;
+            padding: var(--space-1) var(--space-2);
+            border: 0;
+            border-radius: var(--radius-button);
+            background: var(--teal);
+            color: var(--navy);
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 180ms ease, transform 180ms ease;
+        }
+
+        .stat-card:hover,
+        .habit-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--teal);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .complete-button:hover {
+            background: var(--teal-hover);
+            transform: translateY(-1px);
+        }
+
+        .complete-button:focus-visible {
+            outline: 3px solid var(--focus-ring);
+            outline-offset: 3px;
+        }
+
+        footer {
+            padding: var(--space-3) var(--space-2);
+            background: var(--navy);
+            color: var(--header-muted);
+            text-align: center;
+        }
+
+        .footer-inner p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .header-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-inner,
+            main,
+            .footer-inner {
+                width: min(1120px, calc(100% - 32px));
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .habits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
 </head>
 <body>
-
-    <header>
-        <h1>🌱 Habitly</h1>
-        <p>Sunday, 15 November 2026</p>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <span class="brand-icon" aria-hidden="true">🌱</span>
+                <h1>Habitly</h1>
+            </div>
+            <p class="header-date">Friday, 20 November 2026</p>
+        </div>
     </header>
 
     <main>
+        <section class="section" aria-labelledby="progress-title">
+            <h2 class="section-title" id="progress-title">Your Progress</h2>
+            <div class="stats-grid">
+                <article class="stat-card">
+                    <p class="stat-label">Done Today</p>
+                    <p class="stat-value">3/5</p>
+                </article>
 
-        <section>
-            <h2>Your Progress</h2>
+                <article class="stat-card">
+                    <p class="stat-label">Best Streak</p>
+                    <p class="stat-value">12 days</p>
+                </article>
 
-            <article>
-                <h3>Done Today</h3>
-                <p>3/5</p>
-            </article>
-
-            <article>
-                <h3>Best Streak</h3>
-                <p>12 days</p>
-            </article>
-
-            <article>
-                <h3>This Week</h3>
-                <p>78%</p>
-            </article>
+                <article class="stat-card">
+                    <p class="stat-label">This Week</p>
+                    <p class="stat-value">78%</p>
+                </article>
+            </div>
         </section>
 
-        <section>
-            <h2>Your Habits</h2>
+        <section class="section" aria-labelledby="habits-title">
+            <h2 class="section-title" id="habits-title">Your Habits</h2>
+            <div class="habits-grid">
+                <article class="habit-card">
+                    <div class="habit-info">
+                        <span class="habit-icon" aria-hidden="true">💧</span>
+                        <h3 class="habit-name">Drink Water</h3>
+                    </div>
+                    <p class="habit-streak">12 day streak</p>
+                    <button class="complete-button" type="button">Complete</button>
+                </article>
 
-            <article>
-                <h3>💧 Drink Water</h3>
-                <p>12 day streak</p>
-                <button>Complete</button>
-            </article>
+                <article class="habit-card">
+                    <div class="habit-info">
+                        <span class="habit-icon" aria-hidden="true">📚</span>
+                        <h3 class="habit-name">Read 20 Pages</h3>
+                    </div>
+                    <p class="habit-streak">7 day streak</p>
+                    <button class="complete-button" type="button">Complete</button>
+                </article>
 
-            <article>
-                <h3>📚 Read 20 Pages</h3>
-                <p>7 day streak</p>
-                <button>Complete</button>
-            </article>
+                <article class="habit-card">
+                    <div class="habit-info">
+                        <span class="habit-icon" aria-hidden="true">🏃</span>
+                        <h3 class="habit-name">Morning Run</h3>
+                    </div>
+                    <p class="habit-streak">4 day streak</p>
+                    <button class="complete-button" type="button">Complete</button>
+                </article>
 
-            <article>
-                <h3>🏃 Morning Run</h3>
-                <p>4 day streak</p>
-                <button>Complete</button>
-            </article>
+                <article class="habit-card">
+                    <div class="habit-info">
+                        <span class="habit-icon" aria-hidden="true">🧘</span>
+                        <h3 class="habit-name">Meditation</h3>
+                    </div>
+                    <p class="habit-streak">3 day streak</p>
+                    <button class="complete-button" type="button">Complete</button>
+                </article>
 
-            <article>
-                <h3>🧘 Meditation</h3>
-                <p>3 day streak</p>
-                <button>Complete</button>
-            </article>
-
-            <article>
-                <h3>💻 Coding Practice</h3>
-                <p>5 day streak</p>
-                <button>Complete</button>
-            </article>
-
+                <article class="habit-card">
+                    <div class="habit-info">
+                        <span class="habit-icon" aria-hidden="true">💻</span>
+                        <h3 class="habit-name">Coding Practice</h3>
+                    </div>
+                    <p class="habit-streak">5 day streak</p>
+                    <button class="complete-button" type="button">Complete</button>
+                </article>
+            </div>
         </section>
-
     </main>
 
     <footer>
-        <p>Built with the CodGen Frontend Internship | codgen.in</p>
+        <div class="footer-inner">
+            <p>Built with the CodGen Frontend Internship | codgen.in</p>
+        </div>
     </footer>
-
 </body>
 </html>
